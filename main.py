@@ -3,7 +3,6 @@ import time
 from random import randrange
 
 import pygame
-from pygame.locals import *
 
 pygame.init() # pylint: disable=no-member
 
@@ -20,12 +19,13 @@ snakecolor=pygame.Color(VERT)
 headcolor=pygame.Color(VERTFONCE)
 screencolor=pygame.Color((128,128,255))
 stonecolor=pygame.Color(GRIS)
-highscorefile="SNAKE_HIGH_SCORE.txt"
+highscorefile="HIGH_SCORE.txt"
 try:
-    f=open(highscorefile)
+    f=open(highscorefile, encoding="UTF8")
     highscore=int(f.read())
     f.close()
-except:highscore=0
+except:
+    highscore=0
 
 
 # largeur pixels par carré
@@ -171,9 +171,9 @@ def changehsva(color,h=0,s=0,v=0,a=0):
 def verifk(k):
     global indices,gameover,score,direction,autoplay,stones
     if 1:
-            if k==K_i:
+            if k==pygame.K_i: # pylint: disable=no-member
                 indices=not indices
-            elif k==K_n:
+            elif k==pygame.K_n: # pylint: disable=no-member
                 gameover=False
                 score=0
                 stones=[]
@@ -181,18 +181,18 @@ def verifk(k):
                     nouveau_snake()
                     nouvelle_pomme()
                 autoplay=True
-            elif k==K_s:
+            elif k==pygame.K_s: # pylint: disable=no-member
                 nouveau_stone()
-            if k==K_RIGHT:
+            if k==pygame.K_RIGHT: # pylint: disable=no-member
                 if direction!=(-1,0):
                     direction=(1,0)
-            elif k==K_DOWN:
+            elif k==pygame.K_DOWN: # pylint: disable=no-member
                 if direction!=(0,-1):
                     direction=(0,1)
-            elif k==K_LEFT:
+            elif k==pygame.K_LEFT: # pylint: disable=no-member
                 if direction!=(1,0):
                     direction=(-1,0)
-            elif k==K_UP:
+            elif k==pygame.K_UP: # pylint: disable=no-member
                 if direction!=(0,1):
                     direction=(0,-1)
                     
@@ -209,9 +209,9 @@ tt=time.time()
 while jouer:
     for e in [*pygame.event.get()]:
         Break=True
-        if e.type==QUIT:
+        if e.type==pygame.QUIT: # pylint: disable=no-member:
             jouer=False
-        elif e.type==KEYDOWN:
+        elif e.type==pygame.KEYDOWN: # pylint: disable=no-member:
             k=e.key
             verifk(k)
         else:
@@ -238,5 +238,5 @@ while jouer:
     #print(round(tt2-tt,2))
     clock.tick(speed)
     tt=tt2
-pygame.quit()
+pygame.quit() # pylint: disable=no-member
 # exit()
